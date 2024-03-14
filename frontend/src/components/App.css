@@ -1,0 +1,9 @@
+.App-Title{
+    font-size: 1.5em;
+}
+.App-Header{
+    background-color: lightslategray;
+    height: 85px;
+    padding: 20px;
+    color: white;
+}

@@ -11,7 +11,6 @@ import java.security.Key;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 import java.util.function.Function;
 
 public class JwtService { //this class will provide all the jwt service that wil be needed
@@ -55,7 +54,7 @@ public class JwtService { //this class will provide all the jwt service that wil
     private Date extractExpiration(String token){
         return extractClaim(token, Claims::getExpiration);
     }
-    
+
 
     private Claims extractAllClaims(String token){
         return Jwts

@@ -1,6 +1,7 @@
 package com.auth.springSecuirty.modules.auth.config;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
 
 import java.util.function.Function;
 
@@ -17,6 +18,13 @@ public class JwtService { //this class will provide all the jwt service that wil
         return claimsResolver.apply(claims);
     }
 
-    
+    private Claims extractAllClaims(String token){
+        return Jwts
+                .parserBuilder()
+                .setSigningKey(getSignInKey())
+                .build()
+                .parseClaimsJws(token)
+                .getBody();
+    }
 
 }

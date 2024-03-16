@@ -2,10 +2,16 @@ package com.auth.springSecuirty.modules.auth.config;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Key;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 import java.util.function.Function;
 
 public class JwtService { //this class will provide all the jwt service that wil be needed
@@ -21,6 +27,23 @@ public class JwtService { //this class will provide all the jwt service that wil
         return claimsResolver.apply(claims);
     }
 
+
+    public String generateToken(UserDetails userDetails){
+        return generateToken(new HashMap<>(), userDetails);
+    }
+
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails){ //generating the tokens
+        return Jwts.builder()
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
+                .signWith(getSignInKey(), SignatureAlgorithm.HS256)
+                .compact();
+    }
+
+
+
     private Claims extractAllClaims(String token){
         return Jwts
                 .parserBuilder()
@@ -35,6 +58,6 @@ public class JwtService { //this class will provide all the jwt service that wil
         return Keys.hmacShaKeyFor(keyBytes);
     }
 
-    
+
 
 }

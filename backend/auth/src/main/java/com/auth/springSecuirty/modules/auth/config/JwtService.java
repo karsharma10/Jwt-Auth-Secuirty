@@ -33,7 +33,8 @@ public class JwtService { //this class will provide all the jwt service that wil
     }
 
     public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails){ //generating the tokens
-        return Jwts.builder()
+        return Jwts
+                .builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
@@ -42,6 +43,10 @@ public class JwtService { //this class will provide all the jwt service that wil
                 .compact();
     }
 
+    public boolean isTokenValid(String token, UserDetails userDetails){
+        final String username = extractUsername(token);
+        return (username.equals(userDetails.getUsername())) && !isTokenExpired(token);
+    }
 
 
     private Claims extractAllClaims(String token){

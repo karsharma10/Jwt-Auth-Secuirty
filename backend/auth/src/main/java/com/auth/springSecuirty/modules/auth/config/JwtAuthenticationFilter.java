@@ -7,6 +7,8 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
@@ -29,7 +31,7 @@ public class JwtAuthenticationFilter implements OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization"); //this will get the authorization from header
 
         String jwt = null; //set jwt token to null for now
-        String username = null; //set username to null
+        String userEmail = null; //set username to null
 
         if (authHeader != null && authHeader.startsWith("Bearer ")){ //check if the token is being passed in the auth header
             jwt = authHeader.substring(7);
@@ -38,7 +40,17 @@ public class JwtAuthenticationFilter implements OncePerRequestFilter {
             jwt = getCookie.extractJwtCookie(request); //call get cookie method if the jwt token is in the cookie path.
         }
 
+        //if jwt is equal to null then do filter:
+        if(jwt == null){
+            filterChain.doFilter(request, response);
+        }
 
+        userEmail = jwtService.extractUsername(jwt); //grab the useremail from the jwt token
+
+        if(userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null){ //if the useremail is not null and the authentication is not yet set then:
+            UserDetails userDetails = this.userDetailsService.loadUserByUsername(userEmail);
+            
+        }
 
 
     }

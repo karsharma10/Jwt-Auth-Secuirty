@@ -27,17 +27,16 @@ public class AuthenticationService {
 
     private final UserMapper userMapper;
 
-    public String register(UserDto userDto){
+    public Boolean register(UserDto userDto){
         User userMapFromDto = userMapper.userMapDtoToEntity(userDto);
 
         userMapFromDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
         userMapFromDto.setRole(UserRoles.USER);
 
-        userRepository.save(userMapFromDto);
+        User saveUser = userRepository.save(userMapFromDto);
 
-        var jwtToken = jwtService.generateToken(userMapFromDto);
 
-        return jwtToken;
+        return true;
     }
 
     public boolean doesUserExist(UserDto userDto){

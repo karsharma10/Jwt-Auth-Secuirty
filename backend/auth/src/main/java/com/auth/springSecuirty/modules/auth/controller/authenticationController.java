@@ -29,8 +29,8 @@ public class authenticationController {
             return new ResponseEntity<>("User Already Exists In The Database",HttpStatus.METHOD_NOT_ALLOWED);
         }
         else{
-            String registerToken = authenticationService.register(userDto);
-            return new ResponseEntity<>(registerToken, HttpStatus.OK);
+            authenticationService.register(userDto);
+            return new ResponseEntity<>("User Registered", HttpStatus.OK);
         }
     }
 

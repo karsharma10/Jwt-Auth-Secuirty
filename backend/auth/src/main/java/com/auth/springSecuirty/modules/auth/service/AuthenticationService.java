@@ -9,6 +9,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationService {
@@ -31,6 +33,15 @@ public class AuthenticationService {
         var jwtToken = jwtService.generateToken(userMapFromDto);
 
         return jwtToken;
+    }
+
+    public boolean doesUserExist(UserDto userDto){
+        User userMapFromDto = userMapper.userMapDtoToEntity(userDto);
+        String userEmail = userMapFromDto.getEmail();
+
+        Optional<User> findUserByEmail = userRepository.findByEmail(userEmail);
+
+        return findUserByEmail.isPresent();
     }
 
     

@@ -23,7 +23,6 @@ public class authenticationController {
             return new ResponseEntity<>("User Already Exists In The Database",HttpStatus.NO_CONTENT);
         }
         if(authenticationService.doesUserExist(userDto)){ //if the user exists in the database, then don't register them
-            System.out.println("h");
             return new ResponseEntity<>(HttpStatus.METHOD_NOT_ALLOWED);
         }
         else{

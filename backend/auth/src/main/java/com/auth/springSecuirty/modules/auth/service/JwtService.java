@@ -1,4 +1,4 @@
-package com.auth.springSecuirty.modules.auth.config;
+package com.auth.springSecuirty.modules.auth.service;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

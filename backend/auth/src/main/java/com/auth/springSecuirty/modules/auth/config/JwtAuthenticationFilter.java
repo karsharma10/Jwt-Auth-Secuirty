@@ -1,5 +1,6 @@
 package com.auth.springSecuirty.modules.auth.config;
 
+import com.auth.springSecuirty.modules.auth.service.JwtService;
 import com.auth.springSecuirty.utils.GetCookie;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

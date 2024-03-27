@@ -34,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization"); //this will get the authorization from header
 
         String jwt = null; //set jwt token to null for now
-        String userEmail = null; //set username to null
+        final String userEmail; //set username to null
 
         if (authHeader != null && authHeader.startsWith("Bearer ")){ //check if the token is being passed in the auth header
             jwt = authHeader.substring(7);
@@ -46,6 +46,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         //if jwt is equal to null then do filter:
         if(jwt == null){
             filterChain.doFilter(request, response);
+            return;
         }
 
         userEmail = jwtService.extractUsername(jwt); //grab the useremail from the jwt token

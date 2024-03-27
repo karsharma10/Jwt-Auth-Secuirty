@@ -1,5 +1,6 @@
 package com.auth.springSecuirty.modules.auth.service;
 
+import com.auth.springSecuirty.modules.enums.UserRoles;
 import com.auth.springSecuirty.modules.user.dto.UserDto;
 import com.auth.springSecuirty.modules.user.entity.User;
 import com.auth.springSecuirty.modules.user.mapper.UserMapper;
@@ -28,6 +29,9 @@ public class AuthenticationService {
 
     public String register(UserDto userDto){
         User userMapFromDto = userMapper.userMapDtoToEntity(userDto);
+
+        userMapFromDto.setPassword(passwordEncoder.encode(userDto.getPassword()));
+        userMapFromDto.setRole(UserRoles.USER);
 
         userRepository.save(userMapFromDto);
 

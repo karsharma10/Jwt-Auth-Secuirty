@@ -19,7 +19,7 @@ import java.util.function.Function;
 public class JwtService { //this class will provide all the jwt service that wil be needed
 
     @Value("${jwt.secret}")
-    private static String SECRET_KEY; //change in prod to be outside
+    private String SECRET_KEY; //change in prod to be outside
 
     public String extractUsername(String token){
         return extractClaim(token, Claims::getSubject);

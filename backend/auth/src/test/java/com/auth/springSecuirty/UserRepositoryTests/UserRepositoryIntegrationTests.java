@@ -3,6 +3,7 @@ package com.auth.springSecuirty.UserRepositoryTests;
 import com.auth.springSecuirty.modules.enums.UserRoles;
 import com.auth.springSecuirty.modules.user.entity.User;
 import com.auth.springSecuirty.modules.user.repository.UserRepository;
+import com.auth.springSecuirty.utils.TestData;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -18,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 @SpringBootTest
 @ExtendWith(SpringExtension.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@Transactional
 public class UserRepositoryIntegrationTests {
 
     private final UserRepository userRepository;
@@ -30,20 +32,19 @@ public class UserRepositoryIntegrationTests {
 
     @Test
     public void TestThatUserRepositoryCorrectlyCreatesAndFetchesUser(){
-        User testUser = User.builder()
-                .id(1)
-                .firstname("test1")
-                .lastname("test1")
-                .email("test@gmail.com")
-                .password("123")
-                .role(UserRoles.USER)
-                .build();
+        User testUser = TestData.createTestUserA();
 
         userRepository.save(testUser);
 
         Optional<User> findTestUserById = userRepository.findById(1);
 
-        assertThat(findTestUserById).isPresent();
+        assertThat(findTestUserById).isPresent(); //assert that it is present
+        assertThat(findTestUserById.get().getId()).isEqualTo(1);
+        assertThat(findTestUserById.get().getFirstname()).isEqualTo("TestA");
+        assertThat(findTestUserById.get().getLastname()).isEqualTo("TestA");
+        assertThat(findTestUserById.get().getEmail()).isEqualTo("testa@gmail.com");
+        assertThat(findTestUserById.get().getPassword()).isEqualTo("123");
+        assertThat(findTestUserById.get().getRole()).isEqualTo(UserRoles.USER);
 
 
     }

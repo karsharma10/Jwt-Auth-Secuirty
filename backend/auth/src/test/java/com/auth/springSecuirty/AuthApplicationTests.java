@@ -1,4 +1,4 @@
-package springSecuirty.auth;
+package com.auth.springSecuirty;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

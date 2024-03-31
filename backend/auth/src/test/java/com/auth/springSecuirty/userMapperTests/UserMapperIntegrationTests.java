@@ -26,7 +26,7 @@ public class UserMapperIntegrationTests {
     }
 
     @Test
-    public void userMapperCorrectlyMapsFromUserFromEntityToDto(){
+    public void testThatUserMapperCorrectlyMapsFromUserFromEntityToDto(){
         User testUserAEntity = TestData.createTestUserA();
         UserDto checkUserDto = TestData.createTestUserADto();
 
@@ -35,5 +35,13 @@ public class UserMapperIntegrationTests {
         assertThat(convertedUserDto).isEqualTo(checkUserDto); //check that user entity maps correctly to dto
     }
 
-    
+    @Test
+    public void testThatUserMapperCorrectlyMapsFromDtoToEntity(){
+        UserDto testUserADto = TestData.createTestUserADto();
+        User checkUserDto = TestData.createTestUserA();
+
+        User convertedUserEntity = userMapper.userMapDtoToEntity(testUserADto);
+
+        assertThat(convertedUserEntity).isEqualTo(checkUserDto);
+    }
 }

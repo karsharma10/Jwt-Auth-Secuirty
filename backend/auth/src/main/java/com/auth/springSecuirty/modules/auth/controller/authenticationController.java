@@ -50,6 +50,6 @@ public class authenticationController {
 
         response.addHeader(HttpHeaders.SET_COOKIE, cookie.toString());
 
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(token,HttpStatus.OK);
     }
 }

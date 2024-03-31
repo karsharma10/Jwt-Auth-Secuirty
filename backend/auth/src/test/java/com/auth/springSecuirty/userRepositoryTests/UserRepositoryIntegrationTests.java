@@ -1,4 +1,4 @@
-package com.auth.springSecuirty.UserRepositoryTests;
+package com.auth.springSecuirty.userRepositoryTests;
 
 import com.auth.springSecuirty.modules.enums.UserRoles;
 import com.auth.springSecuirty.modules.user.entity.User;
@@ -45,7 +45,6 @@ public class UserRepositoryIntegrationTests {
         assertThat(findTestUserById.get().getEmail()).isEqualTo("testa@gmail.com");
         assertThat(findTestUserById.get().getPassword()).isEqualTo("123");
         assertThat(findTestUserById.get().getRole()).isEqualTo(UserRoles.USER);
-
 
     }
 }

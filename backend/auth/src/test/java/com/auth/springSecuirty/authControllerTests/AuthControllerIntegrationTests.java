@@ -46,4 +46,18 @@ public class AuthControllerIntegrationTests {
         )
                 .andExpect(MockMvcResultMatchers.status().isForbidden());
     }
+
+    @Test
+    public void testThatUserCannotRegisterWithInValidCredentials() throws Exception{
+
+        mockMvc.perform(
+                MockMvcRequestBuilders
+                        .post("/api/v1/auth/register")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+                .andExpect(
+                        MockMvcResultMatchers.status().isForbidden()
+                );
+    }
 }
